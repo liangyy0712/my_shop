@@ -25,10 +25,19 @@ export default {
   },
   created () {
     this.showBack = this.$route.path !== '/home'
+    this.checkLogin()
   },
   methods: {
     goBack () {
       this.$router.go(-1)
+    },
+    async checkLogin () {
+      const {data:result}=await this.$http.get('user')
+      console.log('app-login', result.code)
+      // 如果登录过  就把数据保存到vuex中
+      if(result.code===1){
+        this.$store.commit('user/setUser', result.data)
+      }
     }
   },
   watch: {

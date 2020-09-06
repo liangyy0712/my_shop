@@ -47,7 +47,9 @@
                         // this.$toast(result.msg)
                         // console.log(result.data.id+'==='+result.data.username)
                         this.$store.commit('user/setUser', result.data)
-                        // console.log('---'+this.$store.state.user.loginForm.username)
+                        // console.log('---'+this.$store.getters['user/isLogin'])
+                        console.log('---'+this.$store.state.user.loginForm.username)
+                        this.$auth.setAuthorization(result.data.session_id)
                         this.$router.push('/profile')
                     }
                 }  

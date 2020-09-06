@@ -6,8 +6,13 @@ import Cart from '../views/Cart.vue'
 import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import GoodsList from '../views/goods/GoodsList.vue'
+import GoodsInfo from '../views/goods/GoodsInfo.vue'
 Vue.use(VueRouter)
-
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 const routes = [
   {
     path: '/',
@@ -53,6 +58,25 @@ const routes = [
     component: Register,
     meta: {
       title: '注册'
+    }
+  },
+  {
+    // 路由传参
+    path: '/goodslist/:category_id',
+    props:true,
+    component: GoodsList,
+    meta: {
+      title: '商品列表'
+    }
+  },
+  {
+    // 商品详情  商品id  name 给路由起名字
+    path: '/goodsinfo/:id',
+    props:true,
+    component: GoodsInfo,
+    name:'goods_info',
+    meta: {
+      title: '商品详情'
     }
   }
 
